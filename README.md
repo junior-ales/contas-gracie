@@ -1,8 +1,6 @@
-Contas Gracie
-=============
+# Contas Gracie
 
-### Dividindo as contas de uma maneira mais justa que um mata-leão encaixado
-=============
+_Dividindo as contas de uma maneira mais justa que um mata-leão encaixado_
 
 ## Ferramentas de Desenvolvimento
 
@@ -12,3 +10,4 @@ Contas Gracie
 ## Pague o Aluguel!
 
 ![Pague o Aluguel](http://spe.fotolog.com/photo/46/14/66/calistenia/1279556313995_f.jpg)
+
