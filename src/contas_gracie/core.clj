@@ -10,13 +10,13 @@
   (slurp (clojure.java.io/resource
     (str "templates/partials/" template-name ".html"))))
 
-(enlive/deftemplate t1 "templates/layout.html" [title content]
+(enlive/deftemplate main-layout "templates/layout.html" [title content]
   [:title] (enlive/content title)
   [:section#main] (enlive/html-content content))
 
 ;; View functions
 (defn index []
-    (apply str (t1 "Contas Gracie" (read-template "login"))))
+    (apply str (main-layout "Contas Gracie" (read-template "login"))))
 
 ;; Routing
 (defroutes main-routes

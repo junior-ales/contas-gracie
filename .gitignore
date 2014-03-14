@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+*/**/bower_components/
 pom.xml
 *.jar
 *.class
