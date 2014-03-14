@@ -2,20 +2,21 @@
   (:use compojure.core)
   (:require
     [ring.adapter.jetty :as jetty]
-    [clostache.parser :as clostache]
+    [net.cgrand.enlive-html :as enlive]
     [compojure.route :as route]))
 
 ;; Template Rendering
 (defn read-template [template-name]
   (slurp (clojure.java.io/resource
-    (str "templates/" template-name ".mustache"))))
+    (str "templates/partials/" template-name ".html"))))
 
-(defn render-template [template-file params]
-   (clostache/render (read-template template-file) params))
+(enlive/deftemplate t1 "templates/layout.html" [title content]
+  [:title] (enlive/content title)
+  [:section#main] (enlive/html-content content))
 
 ;; View functions
 (defn index []
-  (render-template "index" {:greeting "Bonjour"}))
+    (apply str (t1 "Contas Gracie" (read-template "login"))))
 
 ;; Routing
 (defroutes main-routes
