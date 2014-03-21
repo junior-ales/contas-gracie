@@ -1,1 +1,10 @@
 #login { margin-top: 15%; }
+
+header#main {
+  min-height: 120px;
+  margin-top: 30px;
+}
+
+#main-header button {
+  min-height: 70px;
+}

@@ -25,15 +25,15 @@
 (defn index []
     (apply str (main-layout "Contas Gracie" (read-partial "login"))))
 
-(defn home []
+(defn inicio []
     (apply str (authorized-layout "Contas Gracie - Benvindo" (read-partial "profile"))))
 
 ;; Routing
 (defroutes main-routes
   (GET "/" [] (index))
-  (GET "/home" [] (home))
+  (GET "/inicio" [] (inicio))
   (route/resources "/")
-  (route/resources "/home")
+  (route/resources "/inicio")
   (route/not-found "404 Not Found"))
 
 ;; Server
