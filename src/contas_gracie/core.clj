@@ -6,22 +6,34 @@
     [compojure.route :as route]))
 
 ;; Template Rendering
-(defn read-template [template-name]
+(defn read-partial [partial-name]
   (slurp (clojure.java.io/resource
-    (str "templates/partials/" template-name ".html"))))
+    (str "templates/partials/" partial-name ".html"))))
+
+(enlive/defsnippet header "templates/_header.html" [:section#main-header] [] identity)
 
 (enlive/deftemplate main-layout "templates/layout.html" [title content]
   [:title] (enlive/content title)
-  [:section#main] (enlive/html-content content))
+  [:section#content] (enlive/html-content content))
+
+(enlive/deftemplate authorized-layout "templates/layout.html" [title content]
+  [:title] (enlive/content title)
+  [:header#main] (enlive/content (header))
+  [:section#content] (enlive/html-content content))
 
 ;; View functions
 (defn index []
-    (apply str (main-layout "Contas Gracie" (read-template "login"))))
+    (apply str (main-layout "Contas Gracie" (read-partial "login"))))
+
+(defn home []
+    (apply str (authorized-layout "Contas Gracie - Benvindo" (read-partial "profile"))))
 
 ;; Routing
 (defroutes main-routes
   (GET "/" [] (index))
+  (GET "/home" [] (home))
   (route/resources "/")
+  (route/resources "/home")
   (route/not-found "404 Not Found"))
 
 ;; Server
