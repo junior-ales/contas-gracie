@@ -5,6 +5,7 @@ header#main {
   margin-top: 30px;
 }
 
-#main-header button {
+#main-header a {
   min-height: 70px;
+  min-width: 220px;
 }
