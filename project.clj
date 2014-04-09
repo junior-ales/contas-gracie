@@ -8,7 +8,9 @@
                  [ring "1.2.1"]
                  [compojure "1.1.6"]
                  [de.ubercode.clostache/clostache "1.3.1"]
-                 [enlive "1.1.5"]]
+                 [enlive "1.1.5"]
+                 [org.clojure/java.jdbc "0.2.3"]
+                 [org.xerial/sqlite-jdbc "3.7.2"]]
   :plugins [[lein-bower "0.2.0"]]
   :bower-dependencies [[foundation "5.2.1"]]
   :bower {:directory "resources/public/bower_components"}
