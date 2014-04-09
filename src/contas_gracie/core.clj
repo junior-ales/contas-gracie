@@ -5,8 +5,7 @@
   (:require
     [ring.adapter.jetty :as jetty]
     [net.cgrand.enlive-html :as enlive]
-    [compojure.route :as route]
-    [ring.middleware.params :only [wrap-params]]))
+    [compojure.route :as route]))
 
 ;; Template Rendering
 (defn read-partial [partial-name]
