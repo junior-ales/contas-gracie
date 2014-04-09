@@ -27,3 +27,10 @@
       :users
       [:email :password :timestamp]
       [email password (new java.util.Date)])))
+
+(defn user-exists? [email password]
+  (<= 1 (sql/with-connection
+    db
+    (sql/with-query-results*
+      [(str "SELECT * FROM users where email = '" email "' and password = '" password "'")]
+      (fn [x] (count x))))))
