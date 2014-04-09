@@ -14,3 +14,5 @@ pom.xml
 .lein-plugins
 .lein-env
 .DS_Store
+*.sq3
+.lein-repl-history
