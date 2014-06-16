@@ -1,4 +1,4 @@
-;; Those tests are wrong in so many ways that I'm embarassed
+;; Those tests are wrong in so many ways that I'm embarrassed
 ;; to commit them. But they truly helped me develop it and
 ;; I'm sure they can be refactored and then deliver good value
 

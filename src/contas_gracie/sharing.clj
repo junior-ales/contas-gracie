@@ -2,9 +2,9 @@
 
 ;; TODO fetch users from database
 (def users
-  '({:name "junior" :responsible-for [] :payer? false}
-    {:name "desiree" :responsible-for ["rent" "electricity"] :payer? true}
-    {:name "brian" :responsible-for ["internet"] :payer? false}))
+  '({:name "junior" :bills-responsible-for [] :payer? false}
+    {:name "desiree" :bills-responsible-for ["rent" "electricity"] :payer? true}
+    {:name "brian" :bills-responsible-for ["internet"] :payer? false}))
 
 ;; TODO fetch bills from database
 (def bills
@@ -34,7 +34,7 @@
 ;; Amount to pay to companies (e.g. CEEE, NET)
 (defn amount-to-pay[user-name]
   (total-amount (map (fn[bill-name] (find-bill bill-name))
-                     (:responsible-for (find-user user-name)))))
+                     (:bills-responsible-for (find-user user-name)))))
 
 ;; Amount to transfer to the payer user
 (defn amount-to-transfer[user-name]
@@ -43,6 +43,6 @@
         evenly-shared-amount (/ grant-total (count users))]
     (if (= user (payer))
       0
-      (if (empty? (:responsible-for user))
+      (if (empty? (:bills-responsible-for user))
         evenly-shared-amount
         (- evenly-shared-amount (amount-to-pay (:name user)))))))
