@@ -43,3 +43,11 @@
 ;; TODO create "summary" and "user-summary" methods to show a structure
 ;; like that:
 ;; {:name "junior" :pays 0 :transfer 725 :transfer-to "desiree"}
+(defn user-summary[user-name bills users]
+  (let [payer-name (:name (payer users))]
+  {:name user-name
+   :pays (amount-to-pay user-name bills users)
+   :transfer (amount-to-transfer user-name bills users)
+   :transfer-to (if (= payer-name user-name)
+                  nil
+                  payer-name)}))
