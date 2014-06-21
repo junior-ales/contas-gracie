@@ -1,6 +1,7 @@
 (ns contas-gracie.core
   (:use compojure.core)
   (:use contas-gracie.db)
+  (:use contas-gracie.sharing)
   (:use ring.middleware.params)
   (:require
     [ring.adapter.jetty :as jetty]

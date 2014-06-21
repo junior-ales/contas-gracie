@@ -16,3 +16,4 @@ pom.xml
 .DS_Store
 *.sq3
 .lein-repl-history
+.nrepl-port

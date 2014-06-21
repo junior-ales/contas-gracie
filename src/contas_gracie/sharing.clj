@@ -12,37 +12,33 @@
     {:name "rent" :amount 1900}
     {:name "internet" :amount 185}))
 
-(defn- finder[diff coll]
-  (first
-    (filter (complement nil?)
-            (map (fn[subj]
-                   (if (diff subj) subj))
-                 coll))))
+(def finder (comp first filter))
 
 (defn total-amount[user-bills]
   (apply + (map (fn[bill] (:amount bill)) user-bills)))
 
-(defn payer[]
+(defn payer[users]
   (finder :payer? users))
 
-(defn find-user[user-name]
-  (finder (fn[user] (= (:name user) user-name)) users))
-
-(defn find-bill[bill-name]
-  (finder (fn[bill] (= (:name bill) bill-name)) bills))
+(defn find-by-name[a-name coll]
+  (finder #(= (:name %) a-name) coll))
 
 ;; Amount to pay to companies (e.g. CEEE, NET)
-(defn amount-to-pay[user-name]
-  (total-amount (map (fn[bill-name] (find-bill bill-name))
-                     (:bills-responsible-for (find-user user-name)))))
+(defn amount-to-pay[user-name bills users]
+  (total-amount (map (fn[bill-name] (find-by-name bill-name bills))
+                     (:bills-responsible-for (find-by-name user-name users)))))
 
 ;; Amount to transfer to the payer user
-(defn amount-to-transfer[user-name]
-  (let [user (find-user user-name)
+(defn amount-to-transfer[user-name bills users]
+  (let [user (find-by-name user-name users)
         grant-total (total-amount bills)
         evenly-shared-amount (/ grant-total (count users))]
-    (if (= user (payer))
+    (if (= user (payer users))
       0
       (if (empty? (:bills-responsible-for user))
         evenly-shared-amount
-        (- evenly-shared-amount (amount-to-pay (:name user)))))))
+        (- evenly-shared-amount (amount-to-pay (:name user) bills users))))))
+
+;; TODO create "summary" and "user-summary" methods to show a structure
+;; like that:
+;; {:name "junior" :pays 0 :transfer 725 :transfer-to "desiree"}
