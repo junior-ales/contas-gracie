@@ -17,6 +17,9 @@
 (defn total-amount[user-bills]
   (apply + (map (fn[bill] (:amount bill)) user-bills)))
 
+(defn evenly-shared[bills users]
+  (/ (total-amount bills) (count users)))
+
 (defn payer[users]
   (finder :payer? users))
 
@@ -30,14 +33,12 @@
 
 ;; Amount to transfer to the payer user
 (defn amount-to-transfer[user-name bills users]
-  (let [user (find-by-name user-name users)
-        grant-total (total-amount bills)
-        evenly-shared-amount (/ grant-total (count users))]
+  (let [user (find-by-name user-name users)]
     (if (= user (payer users))
       0
       (if (empty? (:bills-responsible-for user))
-        evenly-shared-amount
-        (- evenly-shared-amount (amount-to-pay (:name user) bills users))))))
+        (evenly-shared bills users)
+        (- (evenly-shared bills users) (amount-to-pay user-name bills users))))))
 
 ;; TODO create "summary" and "user-summary" methods to show a structure
 ;; like that:

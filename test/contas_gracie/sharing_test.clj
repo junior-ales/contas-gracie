@@ -7,7 +7,7 @@
     (let [bills '({:name "foo" :amount 100})
           users '({:name "x" :bills-responsible-for [] :payer? true}
                   {:name "x" :bills-responsible-for [] :payer? true})]
-      (is (= (/ (total-amount bills) (count users)) 50)))))
+      (is (= (evenly-shared bills users) 50)))))
 
 (deftest grant-amount-test
   (testing "The sum of all bills"
