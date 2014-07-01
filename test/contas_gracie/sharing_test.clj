@@ -50,7 +50,7 @@
           expected-summary-2 {:name "user-2" :pays 0 :transfer 110 :transfer-to "user-1"}]
       (is (= (user-summary "user-1" bills users) expected-summary-1))
       (is (= (user-summary "user-2" bills users) expected-summary-2))))
-  (testing "The summary of a given user when the payer pays some bills"
+  (testing "The summary of a given user when the payer doesn't pay all the bills"
     (let [bills '({:name "bill-1" :amount 100}
                   {:name "bill-2" :amount 120}
                   {:name "bill-3" :amount 140})
@@ -60,4 +60,16 @@
           expected-summary-2 {:name "user-2" :pays 140 :transfer 40 :transfer-to "user-1"}]
       (is (= (user-summary "user-1" bills users) expected-summary-1))
       (is (= (user-summary "user-2" bills users) expected-summary-2)))))
+
+
+(deftest summary-test
+  (testing "The summary of payments"
+    (let [bills '({:name "bill-1" :amount 100}
+                  {:name "bill-2" :amount 120}
+                  {:name "bill-3" :amount 140})
+          users '({:name "user-1" :bills-responsible-for ["bill-1" "bill-2"] :payer? true}
+                  {:name "user-2" :bills-responsible-for ["bill-3"] :payer? false})
+          expected-summary [{:name "user-1" :pays 220 :transfer 0 :transfer-to nil}
+                            {:name "user-2" :pays 140 :transfer 40 :transfer-to "user-1"}]]
+      (is (= (summary bills users) expected-summary)))))
 

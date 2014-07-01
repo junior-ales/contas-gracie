@@ -46,3 +46,8 @@
    :pays (amount-to-pay user-name bills users)
    :transfer (amount-to-transfer user-name bills users)
    :transfer-to (if (not= payer-name user-name) payer-name)}))
+
+(defn summary[bills users]
+  (let [user-names (map #(:name %) users)]
+    (map (fn[user-name]
+          (user-summary user-name bills users)) user-names)))
