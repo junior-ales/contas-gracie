@@ -17,12 +17,14 @@
 
 (deftest tranfer-amount-test
   (testing "The amount each user need to transfer to the payer"
-    (let [bills '({:name "bill-1" :amount 100}
-                  {:name "bill-2" :amount 120})
-          users '({:name "user-1" :bills-responsible-for ["bill-1" "bill-2"] :payer? true}
-                  {:name "user-2" :bills-responsible-for [] :payer? false})]
+    (let [bills '({:name "bill-1" :amount 60}
+                  {:name "bill-2" :amount 150})
+          users '({:name "user-1" :bills-responsible-for ["bill-2"] :payer? true}
+                  {:name "user-2" :bills-responsible-for [] :payer? false}
+                  {:name "user-3" :bills-responsible-for ["bill-1" ] :payer? false})]
       (is (= (amount-to-transfer "user-1" bills users) 0))
-      (is (= (amount-to-transfer "user-2" bills users) 110)))))
+      (is (= (amount-to-transfer "user-2" bills users) 70))
+      (is (= (amount-to-transfer "user-3" bills users) 10)))))
 
 (deftest find-user-test
   (testing "Find user function"
