@@ -1,6 +1,6 @@
-(ns contas-gracie.sharing-test
+(ns contas-gracie.test.sharing
   (:require [clojure.test :refer :all]
-            [contas-gracie.sharing :refer :all]))
+            [contas-gracie.controller.sharing :refer :all]))
 
 (deftest evenly-shared-amount-test
   (testing "The amount shared evenly among the users"

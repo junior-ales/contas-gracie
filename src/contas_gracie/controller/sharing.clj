@@ -1,16 +1,4 @@
-(ns contas-gracie.sharing)
-
-;; TODO fetch users from database
-(def users
-  '({:name "junior" :bills-responsible-for [] :payer? false}
-    {:name "desiree" :bills-responsible-for ["rent" "electricity"] :payer? true}
-    {:name "brian" :bills-responsible-for ["internet"] :payer? false}))
-
-;; TODO fetch bills from database
-(def bills
-  '({:name "electricity" :amount 90}
-    {:name "rent" :amount 1900}
-    {:name "internet" :amount 185}))
+(ns contas-gracie.controller.sharing)
 
 (def finder (comp first filter))
 
