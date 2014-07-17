@@ -6,11 +6,13 @@
             :url "https://github.com/junior-ales/contas-gracie/blob/master/LICENSE"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.6"]
-                 [org.clojure/java.jdbc "0.2.3"]
+                 [org.clojure/java.jdbc "0.3.3"]
                  [org.xerial/sqlite-jdbc "3.7.2"]
                  [org.clojure/tools.namespace "0.2.4"]
                  [hiccup "1.0.5"]
-                 [ring-server "0.3.1"]]
+                 [ring-server "0.3.1"]
+                 [liberator "0.10.0"]
+                 [cheshire "5.2.0"]]
   :plugins [[lein-ring "0.8.10"]
             [com.jakemccrary/lein-test-refresh "0.5.0"]]
   :ring {:handler contas-gracie.handler/app
@@ -26,6 +28,4 @@
                :auto-reload? false}}
              :dev
              {:dependencies [[ring-mock "0.1.5"]
-                             [ring/ring-devel "1.2.1"]
-                             [liberator "0.10.0"]
-                             [cheshire "5.2.0"]]}})
+                             [ring/ring-devel "1.2.1"]]}})

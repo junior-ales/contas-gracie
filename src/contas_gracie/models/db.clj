@@ -10,11 +10,10 @@
   `(sql/with-connection ~db (~f ~@body)))
 
 (defn create-users-table []
-  (sql/with-connection db
-    (sql/create-table
+  (with-db sql/create-table
       :users
       [:id "INTEGER PRIMARY KEY AUTOINCREMENT"]
       [:timestamp "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]
       [:email "TEXT"]
-      [:password "TEXT"])))
+      [:password "TEXT"]))
 

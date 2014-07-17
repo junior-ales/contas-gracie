@@ -2,11 +2,15 @@
   (:require [clojure.java.jdbc :as sql]
             [contas-gracie.models.db :refer [with-db]]))
 
-;; TODO fetch users from database
-(def users
-  (atom '({:name "junior" :bills-responsible-for [] :payer? false}
-          {:name "desiree" :bills-responsible-for ["rent" "electricity"] :payer? true}
-          {:name "brian" :bills-responsible-for ["internet"] :payer? false})))
+;; TODO that's the final format of the collection of all users
+;;(def users
+;;  (atom '({:name "junior" :bills-responsible-for [] :payer? false}
+;;          {:name "desiree" :bills-responsible-for ["rent" "electricity"] :payer? true}
+;;          {:name "brian" :bills-responsible-for ["internet"] :payer? false})))
+
+(defn get-users []
+  (with-db sql/with-query-results
+    result ["SELECT * FROM users"] (doall result)))
 
 ; No, we're not going to save the password in plain text
 (defn insert-user [email password]
