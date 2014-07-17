@@ -1,6 +1,6 @@
 (ns contas-gracie.models.user
   (:require [clojure.java.jdbc :as sql]
-            [contas-gracie.models.db :refer [db]]))
+            [contas-gracie.models.db :refer [with-db]]))
 
 ;; TODO fetch users from database
 (def users
@@ -10,14 +10,13 @@
 
 ; No, we're not going to save the password in plain text
 (defn insert-user [email password]
-  (sql/with-connection db
-    (sql/insert-values
-      :users
-      [:email :password :timestamp]
-      [email password (new java.util.Date)])))
+  (with-db sql/insert-values
+    :users
+    [:email :password :timestamp]
+    [email password (new java.util.Date)]))
 
 (defn user-exists? [email password]
-  (<= 1 (sql/with-connection db
-    (sql/with-query-results*
-      [(str "SELECT * FROM users WHERE email = '" email "' AND password = '" password "'")]
-      (fn [x] (count x))))))
+  (<= 1
+      (with-db sql/with-query-results*
+        [(str "SELECT * FROM users WHERE email = '" email "' AND password = '" password "'")]
+        (fn [x] (count x)))))

@@ -6,6 +6,9 @@
          :subprotocol "sqlite",
          :subname "db.sq3"})
 
+(defmacro with-db [f & body]
+  `(sql/with-connection ~db (~f ~@body)))
+
 (defn create-users-table []
   (sql/with-connection db
     (sql/create-table
