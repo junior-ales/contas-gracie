@@ -9,8 +9,8 @@
 ;;          {:name "brian" :bills-responsible-for ["internet"] :payer? false})))
 
 (defn get-users []
-  (with-db sql/with-query-results
-    result ["SELECT * FROM users"] (doall result)))
+   (with-db sql/with-query-results
+     result ["SELECT * FROM users"] (doall result)))
 
 ; No, we're not going to save the password in plain text
 (defn insert-user [email password]
@@ -24,3 +24,5 @@
       (with-db sql/with-query-results*
         [(str "SELECT * FROM users WHERE email = '" email "' AND password = '" password "'")]
         (fn [x] (count x)))))
+
+(def users (get-users))
