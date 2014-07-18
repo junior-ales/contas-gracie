@@ -4,7 +4,7 @@
 
 (def db {:classname "org.sqlite.JDBC",
          :subprotocol "sqlite",
-         :subname "db.sq3"})
+         :subname "resources/db/prod.sq3"})
 
 (defmacro with-db [f & body]
   `(sql/with-connection ~db (~f ~@body)))
@@ -13,7 +13,9 @@
   (with-db sql/create-table
       :users
       [:id "INTEGER PRIMARY KEY AUTOINCREMENT"]
-      [:timestamp "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]
-      [:email "TEXT"]
-      [:password "TEXT"]))
+      [:name "TEXT NOT NULL"]
+      [:email "TEXT NOT NULL"]
+      [:password "TEXT NOT NULL"]
+      [:cellphone "INTEGER NOT NULL"]
+      [:created "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"]))
 

@@ -12,17 +12,22 @@
    (with-db sql/with-query-results
      result ["SELECT * FROM users"] (doall result)))
 
+(def users (get-users))
+
+(defn find-user [id]
+   (with-db sql/with-query-results
+     result ["SELECT * FROM users WHERE id = ?" id]
+     (first result)))
+
 ; No, we're not going to save the password in plain text
-(defn insert-user [email password]
+(defn insert-user [name email password cellphone]
   (with-db sql/insert-values
     :users
-    [:email :password :timestamp]
-    [email password (new java.util.Date)]))
+    [:name :email :password :cellphone]
+    [name email password cellphone]))
 
 (defn user-exists? [email password]
   (<= 1
       (with-db sql/with-query-results*
         [(str "SELECT * FROM users WHERE email = '" email "' AND password = '" password "'")]
         (fn [x] (count x)))))
-
-(def users (get-users))
