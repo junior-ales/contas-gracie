@@ -1,9 +1,8 @@
 (ns contas-gracie.routes.home
   (:require [compojure.core :refer :all]
             [cheshire.core :refer [generate-string]]
-            [contas-gracie.models.user :refer [users find-user]]
-            [liberator.core
-             :refer [defresource resource request-method-in]]))
+            [contas-gracie.models.user :refer [all-users find-user]]
+            [liberator.core :refer [defresource resource request-method-in]]))
 
 (defresource get-user [id]
   :allowed-methods [:get]
@@ -12,7 +11,7 @@
 
 (defresource get-users
   :allowed-methods [:get]
-  :handle-ok (fn [_] (generate-string users))
+  :handle-ok (fn [_] (generate-string (all-users)))
   :available-media-types ["application/json"])
 
 (defroutes home-routes

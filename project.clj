@@ -12,9 +12,17 @@
                  [hiccup "1.0.5"]
                  [ring-server "0.3.1"]
                  [liberator "0.10.0"]
+                 [migratus "0.7.0"]
+                 [korma "0.3.3"]
                  [cheshire "5.2.0"]]
   :plugins [[lein-ring "0.8.10"]
+            [migratus-lein "0.1.0"]
             [com.jakemccrary/lein-test-refresh "0.5.0"]]
+  :migratus {:store :database
+           :migration-dir "migrations"
+           :db {:classname "org.sqlite.JDBC",
+                :subprotocol "sqlite",
+                :subname "resources/db/prod.sq3"}}
   :ring {:handler contas-gracie.handler/app
          :init contas-gracie.handler/init
          :destroy contas-gracie.handler/destroy
