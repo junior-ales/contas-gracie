@@ -13,6 +13,12 @@
   (select users
           (where {:id id})))
 
+(defn insert-user [name email password cellphone]
+  (insert users
+          (values {:name name
+                   :email email
+                   :password password
+                   :cellphone cellphone})))
 ;; No, we're not going to save the password in plain text
 ;(defn insert-user [name email password cellphone]
 ;  (with-db sql/insert-values
