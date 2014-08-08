@@ -14,7 +14,11 @@
                  [liberator "0.10.0"]
                  [migratus "0.7.0"]
                  [korma "0.3.3"]
-                 [cheshire "5.2.0"]]
+                 [cheshire "5.2.0"]
+                 [log4j "1.2.15" :exclusions [javax.mail/mail
+                                              javax.jms/jms
+                                              com.sun.jdmk/jmxtools
+                                              com.sun.jmx/jmxri]]]
   :plugins [[lein-ring "0.8.10"]
             [migratus-lein "0.1.0"]
             [com.jakemccrary/lein-test-refresh "0.5.0"]]
