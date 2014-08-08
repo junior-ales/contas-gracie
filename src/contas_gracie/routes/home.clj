@@ -2,6 +2,7 @@
   (:require [compojure.core :refer :all]
             [cheshire.core :refer [generate-string]]
             [contas-gracie.models.user :refer [all-users find-user insert-user]]
+            [contas-gracie.models.bill :refer [all-bills]]
             [liberator.core :refer [defresource resource]]))
 
 (defresource get-user [id]
@@ -27,7 +28,13 @@
         (get params "cellphone"))))
   :post-redirect? (fn [ctx] {:location "/users"}))
 
+(defresource get-bills
+  :allowed-methods [:get]
+  :handle-ok (fn [_] (generate-string (all-bills)))
+  :available-media-types ["application/json"])
+
 (defroutes home-routes
   (ANY "/users" request get-users)
   (ANY "/users/new" request create-user)
-  (ANY "/users/:id" [id] (get-user id)))
+  (ANY "/users/:id" [id] (get-user id))
+  (ANY "/bills" request get-bills))
