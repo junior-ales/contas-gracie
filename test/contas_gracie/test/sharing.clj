@@ -5,8 +5,8 @@
 (deftest evenly-shared-amount-test
   (testing "The amount shared evenly among the users"
     (let [bills '({:name "bill-1" :amount 100})
-          users '({:name "user-1" :bills-responsible-for [] :payer? true}
-                  {:name "user-1" :bills-responsible-for [] :payer? true})]
+          users '({:name "user-1"}
+                  {:name "user-2"})]
       (is (= (evenly-shared bills users) 50)))))
 
 (deftest grant-amount-test
@@ -15,7 +15,7 @@
                   {:name "bill-1" :amount 100})]
       (is (= (total-amount bills) 220)))))
 
-(deftest tranfer-amount-test
+(deftest amount-to-tranfer-test
   (testing "The amount each user need to transfer to the payer"
     (let [bills '({:name "bill-1" :amount 60}
                   {:name "bill-2" :amount 150})
@@ -24,21 +24,28 @@
                   {:name "user-3" :bills-responsible-for ["bill-1" ] :payer? false})]
       (is (= (amount-to-transfer "user-1" bills users) 0))
       (is (= (amount-to-transfer "user-2" bills users) 70))
-      (is (= (amount-to-transfer "user-3" bills users) 10)))))
+      (is (= (amount-to-transfer "user-3" bills users) 10))))
+  (testing "When the user is the payer (s)he transfer no money to other users"
+    (let [bills '({:name "bill-1" :amount 100})
+          users '({:name "user-1" :bills-responsible-for [] :payer? true}
+                  {:name "user-2" :bills-responsible-for [] :payer? false})]
+      (is (= (amount-to-transfer "user-1" bills users) 0))
+      (is (= (amount-to-transfer "user-2" bills users) 50)))))
 
 (deftest find-user-test
   (testing "Find user function"
-    (let [user-x {:name "user-1" :bills-responsible-for [] :payer? true}
-          user-y {:name "user-2" :bills-responsible-for [] :payer? false}
+    (let [user-x {:name "user-1"}
+          user-y {:name "user-2"}
           users [user-x user-y]]
       (is (= (find-by-name "user-1" users) user-x)))))
 
 (deftest amount-to-pay-test
-  (testing "The amount to pay"
+  (testing "The amount to pay and that when the user is not the payer, her/his amount-to-pay should be 0"
     (let [bills '({:name "bill-1" :amount 100})
           users '({:name "user-1" :bills-responsible-for ["bill-1"] :payer? true}
                   {:name "user-2" :bills-responsible-for [] :payer? false})]
-      (is (= (amount-to-pay "user-1" bills users) 100)))))
+      (is (= (amount-to-pay "user-1" bills users) 100))
+      (is (= (amount-to-pay "user-2" bills users) 0)))))
 
 (deftest user-summary-test
   (testing "The summary of a given user when the payer pays all bills"
